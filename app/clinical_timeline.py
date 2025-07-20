@@ -194,6 +194,23 @@ class AuthenticationService:
         """Check if user needs to solve CAPTCHA."""
         failed_attempts = self.file_manager.load_failed_attempts()
         return self._is_account_locked(username, failed_attempts)
+    
+    def logout(self) -> None:
+        """Log out the current user and clear session."""
+        username = self.get_current_user()
+        if username:
+            self.audit_logger.log(f"User logged out: {username}")
+        
+        # Clear all authentication-related session state
+        st.session_state.authenticated = False
+        st.session_state.username = None
+        st.session_state.user_role = None
+        
+        # Clear any CAPTCHA state
+        if "captcha_x" in st.session_state:
+            del st.session_state.captcha_x
+        if "captcha_y" in st.session_state:
+            del st.session_state.captcha_y
 
 
 class CaptchaManager:
@@ -639,7 +656,18 @@ class ClinicalTimelineApp:
     
     def _render_main_app(self) -> None:
         """Render the main application interface."""
-        st.title("📊 Clinical Timeline App")
+        # Header with logout functionality
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.title("📊 Clinical Timeline App")
+        with col2:
+            current_user = self.auth_service.get_current_user()
+            user_role = self.auth_service.get_user_role()
+            st.write(f"👤 **{current_user}** ({user_role})")
+            if st.button("🚪 Logout", key="logout_btn"):
+                self.auth_service.logout()
+                st.rerun()
+        
         st.markdown("Welcome to the secured clinical timeline dashboard.")
         
         # Timeline visualization
