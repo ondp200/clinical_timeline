@@ -35,8 +35,8 @@ USER_ROLE = st.session_state.get("user_role", "viewer")
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
-USERS_FILE = "users.json"
-FAILED_ATTEMPTS_FILE = "failed_attempts.json"
+USERS_FILE = "app/users.json"
+FAILED_ATTEMPTS_FILE = "app/failed_attempts.json"
 
 def load_users():
     if os.path.exists(USERS_FILE):
@@ -47,7 +47,7 @@ def load_users():
 def save_users(users):
     with open(USERS_FILE, "w") as f:
         json.dump(users, f, indent=2)
-    with open("audit.log", "a") as log:
+    with open("app/audit.log", "a") as log:
         log.write(f"[{datetime.now()}] Users updated\n")
 
 def load_failed_attempts():
@@ -107,7 +107,7 @@ if not st.session_state.authenticated:
                     "last_attempt": datetime.now().isoformat()
                 }
                 save_failed_attempts(failed_attempts)
-                with open("audit.log", "a") as log:
+                with open("app/audit.log", "a") as log:
                     log.write(f"[{datetime.now()}] Failed login attempt for username: {username}\n")
 
     with reset_tab:
@@ -119,7 +119,7 @@ if not st.session_state.authenticated:
             users[reset_user]["password"] = hash_password(new_pass)
             save_users(users)
             st.success("Password reset successful. Please log in with your new password.")
-            with open("audit.log", "a") as log:
+            with open("app/audit.log", "a") as log:
                 log.write(f"[{datetime.now()}] Password reset by user: {reset_user}\n")
     st.stop()
 
@@ -267,10 +267,10 @@ if USER_ROLE.lower() == "admin":
     st.markdown("---")
     st.subheader("🛠 Admin Panel")
 
-    if os.path.exists("audit.log"):
-        with open("audit.log", "r") as log:
+    if os.path.exists("app/audit.log"):
+        with open("app/audit.log", "r") as log:
             st.text_area("Audit Log", log.read(), height=200)
-        with open("audit.log", "rb") as f:
+        with open("app/audit.log", "rb") as f:
             st.download_button("Download Log", f, file_name="audit.log")
     else:
         st.info("No audit log available.")
@@ -291,7 +291,7 @@ if USER_ROLE.lower() == "admin":
             users[current_user]["role"] = new_role
             users[current_user]["email"] = new_email
             save_users(users)
-            with open("audit.log", "a") as log:
+            with open("app/audit.log", "a") as log:
                 log.write(f"[{datetime.now()}] Updated user info: {current_user}, role={new_role}, email={new_email}\n")
             st.success(f"Updated info for {current_user}")
 
@@ -305,7 +305,7 @@ if USER_ROLE.lower() == "admin":
         users[target_user]["password"] = hash_password(new_admin_pass)
         save_users(users)
         st.success(f"Password for user '{target_user}' has been reset.")
-        with open("audit.log", "a") as log:
+        with open("app/audit.log", "a") as log:
             log.write(f"[{datetime.now()}] Admin reset password for user: {target_user}\n")
 
     st.markdown("---")
@@ -319,7 +319,7 @@ if USER_ROLE.lower() == "admin":
                 del failed_attempts[unlock_user]
                 save_failed_attempts(failed_attempts)
                 st.success(f"{unlock_user} has been unlocked.")
-                with open("audit.log", "a") as log:
+                with open("app/audit.log", "a") as log:
                     log.write(f"[{datetime.now()}] Admin unlocked user: {unlock_user}\n")
     else:
         st.info("No locked users currently.")
@@ -344,7 +344,7 @@ if USER_ROLE.lower() == "admin":
                 "email": new_email
             }
             save_users(users)
-            with open("audit.log", "a") as log:
+            with open("app/audit.log", "a") as log:
                 log.write(f"[{datetime.now()}] User created: {new_username} ({selected_role})\n")
             st.success(f"User '{new_username}' created with role '{selected_role}'")
 
