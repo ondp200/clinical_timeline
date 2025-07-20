@@ -10,7 +10,10 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # ===== ENVIRONMENT & SECURITY SETUP =====
+import os
 st.write(f"Streamlit bcrypt version: {bcrypt.__version__}")
+st.write(f"Current working directory: {os.getcwd()}")
+st.write(f"Files in current directory: {os.listdir('.')}")
 
 load_dotenv()
 FERNET_KEY_PATH = ".env.key"
