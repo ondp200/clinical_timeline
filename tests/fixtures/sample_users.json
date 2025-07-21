@@ -1,0 +1,17 @@
+{
+  "test_admin": {
+    "password": "$2b$12$sample_admin_hash_for_testing_purposes_only",
+    "email": "admin@test.example.com",
+    "role": "admin"
+  },
+  "test_viewer": {
+    "password": "$2b$12$sample_viewer_hash_for_testing_purposes_only",
+    "email": "viewer@test.example.com", 
+    "role": "viewer"
+  },
+  "test_locked_user": {
+    "password": "$2b$12$sample_locked_hash_for_testing_purposes_only",
+    "email": "locked@test.example.com",
+    "role": "viewer"
+  }
+}

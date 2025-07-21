@@ -1,0 +1,56 @@
+{
+  "patient_id": "test_patient_001",
+  "illness_start": "2010-05-31T00:00:00",
+  "illness_end": "2025-05-31T00:00:00",
+  "inpatient_stays": [
+    {
+      "stay_id": 1,
+      "admission_date": "2010-12-10T08:00:00",
+      "discharge_date": "2011-02-21T16:00:00"
+    },
+    {
+      "stay_id": 2,
+      "admission_date": "2012-02-10T09:30:00", 
+      "discharge_date": "2012-04-28T14:00:00"
+    },
+    {
+      "stay_id": 3,
+      "admission_date": "2013-06-15T11:00:00",
+      "discharge_date": "2013-09-19T15:30:00"
+    }
+  ],
+  "medications": [
+    {
+      "date": "2010-05-31T00:00:00",
+      "medication": "Risperidone",
+      "dosage": "2 mg"
+    },
+    {
+      "date": "2010-12-11T00:00:00",
+      "medication": "Risperidone", 
+      "dosage": "3 mg"
+    },
+    {
+      "date": "2010-12-15T00:00:00",
+      "medication": "Risperidone",
+      "dosage": "4 mg"
+    }
+  ],
+  "diagnoses": [
+    {
+      "date": "2010-05-31T00:00:00",
+      "diagnosis_code": "P-NOS",
+      "diagnosis_name": "Psychosis NOS"
+    },
+    {
+      "date": "2011-05-15T00:00:00",
+      "diagnosis_code": "Sz", 
+      "diagnosis_name": "Schizophrenia"
+    },
+    {
+      "date": "2012-06-20T00:00:00",
+      "diagnosis_code": "SAD",
+      "diagnosis_name": "Schizoaffective Disorder"
+    }
+  ]
+}
